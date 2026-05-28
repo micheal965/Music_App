@@ -17,6 +17,11 @@ const colorsLight = {
   purple500: '#44427D',
   red500: '#C13333',
   skeleton: '#A1A1A1',
+
+  midnight: '#EAF0FF',
+  frost: '#FFFFFF',
+  sky: '#A5C0FF',
+  mutedBlue: '#6B7AA6',
 } as const;
 
 const colorsDark = {
@@ -30,9 +35,14 @@ const colorsDark = {
   purple500: '#A6A4F0',
   red500: '#C13333',
   skeleton: '#303030',
+
+  midnight: '#091227',
+  frost: '#EAF0FF',
+  sky: '#A5C0FF',
+  mutedBlue: '#8996B8',
 } as const;
 
-const sizes = [12, 16, 24, 32, 40, 80] as const;
+const sizes = [2, 4, 6, 8, 12, 16, 24, 32, 40, 80] as const;
 
 export const config = {
   backgrounds: colorsLight,

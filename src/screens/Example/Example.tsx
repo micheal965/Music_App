@@ -7,6 +7,8 @@ import { useTheme } from '@/theme';
 
 import { AssetByVariant, IconByVariant, Skeleton } from '@/components/atoms';
 import { SafeScreen } from '@/components/templates';
+import HomeScreen from '../Home/HomeScreen';
+import AppHeader from '@/components/molecules/Header/AppHeader';
 
 const MAX_RANDOM_ID = 9;
 
@@ -53,7 +55,10 @@ function Example() {
         handleResetError();
       }}
     >
-      <ScrollView>
+
+      <HomeScreen />
+
+      {/* <ScrollView>
         <View
           style={[
             layout.justifyCenter,
@@ -128,7 +133,7 @@ function Example() {
             </TouchableOpacity>
           </View>
         </View>
-      </ScrollView>
+      </ScrollView> */}
     </SafeScreen>
   );
 }
