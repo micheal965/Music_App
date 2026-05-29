@@ -56,7 +56,7 @@ function Example() {
       }}
     >
 
-      <HomeScreen />
+      {/* <HomeScreen /> */}
 
       {/* <ScrollView>
         <View

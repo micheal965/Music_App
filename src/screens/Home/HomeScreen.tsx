@@ -1,49 +1,45 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import React, { useMemo } from 'react';
 import { useTheme } from '@/theme';
-import { IconByVariant } from '@/components/atoms';
 import AppHeader from '@/components/molecules/Header/AppHeader';
-import { fontFamilies } from '@/theme/Constants/fonts';
+import { Gutters } from '@/theme/types/gutters';
+import SongCardWithCategory from '@/components/molecules/SongCardWithCategory/SongCardWithCategory';
+import FloatingPlayer from '@/components/molecules/FloatingPlayer/FloatingPlayer';
+import { SafeScreen } from '@/components/templates';
 
 const HomeScreen = () => {
-  const { layout, colors, changeTheme, variant, gutters, components } =
-    useTheme();
+  const { layout, colors, gutters } = useTheme();
 
   const styles = useMemo(
     () => createStyles(colors, gutters, layout),
     [colors, gutters, layout],
   );
 
-  const onChangeTheme = () => {
-    changeTheme(variant === 'default' ? 'dark' : 'default');
-  };
-
   return (
-    <View style={styles.container}>
-      <AppHeader />
-      <Text style={styles.headingText}>Recommended for you</Text>
-      <TouchableOpacity
-        onPress={onChangeTheme}
-        style={[components.buttonCircle, gutters.marginBottom_16]}
-        testID="change-theme-button"
-      >
-        <IconByVariant path="theme" stroke={colors.purple500} />
-      </TouchableOpacity>
-    </View>
+    <SafeScreen style={styles.wrapper}>
+      <View style={styles.container}>
+        <AppHeader />
+        <FlatList
+          data={[1, 2, 3, 4, 5]}
+          renderItem={() => <SongCardWithCategory />}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
+      <FloatingPlayer />
+    </SafeScreen>
   );
 };
 
-const createStyles = (colors: any, gutters: any, layout: any) =>
+const createStyles = (colors: any, gutters: Gutters, layout: any) =>
   StyleSheet.create({
+    wrapper: {
+      flex: 1,
+    },
     container: {
       backgroundColor: colors.midnight,
       ...layout.flex_1,
       ...gutters.padding_16,
-    },
-    headingText: {
-      fontSize: 25,
-      color: colors.frost,
-      fontFamily: fontFamilies.regular,
+      ...gutters.paddingBottom_0,
     },
   });
 
