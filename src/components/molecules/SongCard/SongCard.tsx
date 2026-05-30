@@ -8,15 +8,18 @@ import { Borders } from '@/theme/types/borders';
 const imageUrl =
   'https://ncsmusic.s3.eu-west-1.amazonaws.com/tracks/000/002/090/325x325/back2u-1777474859-WXPpBcDkbv.png';
 
-const SongCard = () => {
+const SongCard = ({ width }: { width: number | undefined }) => {
   const { colors, gutters, borders } = useTheme();
+
   const styles = useMemo(
     () => createStyles(colors, gutters, borders),
     [colors, gutters, borders],
   );
 
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity
+      style={[styles.container, , width ? { width } : undefined]}
+    >
       <View style={styles.cardContainer}>
         <Image source={{ uri: imageUrl }} style={styles.coverImage} />
         <Text style={styles.title}>Monster Go home</Text>
@@ -33,24 +36,23 @@ const createStyles = (colors: any, gutters: Gutters, borders: Borders) =>
       width: 200,
     },
     cardContainer: {
-      width: 175,
-      height: 175,
+      flex: 1,
       alignItems: 'center',
     },
     coverImage: {
-      width: '100%',
-      height: '100%',
-      ...borders.rounded_8,
+      width: '95%',
+      height: 160,
+      ...borders.rounded_12,
     },
     title: {
       color: colors.frost,
       fontFamily: fontFamilies.medium,
-      fontSize: fontSizes.lg,
-      ...gutters.paddingTop_16,
+      fontSize: fontSizes.md,
+      ...gutters.paddingTop_12,
     },
     author: {
       color: colors.sky,
-      fontSize: fontSizes.md,
+      fontSize: fontSizes.sm,
       fontFamily: fontFamilies.regular,
     },
   });

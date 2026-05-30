@@ -3,7 +3,7 @@ import { iconSizes } from '@/theme/Constants/iconSizes';
 import { TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const PreviousButton = ({ size = iconSizes.lg }) => {
+const PreviousButton = ({ size = iconSizes.lg | iconSizes.xxl }) => {
   const { colors } = useTheme();
 
   return (

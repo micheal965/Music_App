@@ -21,7 +21,13 @@ const HomeScreen = () => {
         <AppHeader />
         <FlatList
           data={[1, 2, 3, 4, 5]}
-          renderItem={() => <SongCardWithCategory />}
+          renderItem={() => (
+            <SongCardWithCategory
+              title={'Recommended for you'}
+              horizontal
+              numOfColumns={1}
+            />
+          )}
           showsVerticalScrollIndicator={false}
         />
       </View>
