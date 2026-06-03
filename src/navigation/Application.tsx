@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme';
-import StackNavigation from './StackNavigation';
+import RootStackNavigation from './RootStackNavigation';
 
 function ApplicationNavigator() {
   const { navigationTheme } = useTheme();
@@ -9,7 +9,7 @@ function ApplicationNavigator() {
   return (
     <SafeAreaProvider>
       <NavigationContainer theme={navigationTheme}>
-        <StackNavigation />
+        <RootStackNavigation />
       </NavigationContainer>
     </SafeAreaProvider>
   );

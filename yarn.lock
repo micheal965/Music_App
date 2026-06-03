@@ -1951,12 +1951,21 @@
     invariant "^2.2.4"
     nullthrows "^1.1.1"
 
-"@react-navigation/core@^7.14.0":
-  version "7.14.0"
-  resolved "https://registry.npmjs.org/@react-navigation/core/-/core-7.14.0.tgz"
-  integrity sha512-tMpzskBzVp0E7CRNdNtJIdXjk54Kwe/TF9ViXAef+YFM1kSfGv4e/B2ozfXE+YyYgmh4WavTv8fkdJz1CNyu+g==
+"@react-navigation/bottom-tabs@^7.16.2":
+  version "7.16.2"
+  resolved "https://registry.npmjs.org/@react-navigation/bottom-tabs/-/bottom-tabs-7.16.2.tgz"
+  integrity sha512-Lbp++BGMc7SQXnyKuO/JrQJIhFH0zyB5v4kIEbnzDJLJfgubd5hoSe+QfCqy4YHfLA4phC4Xf/6Q2Ic8x7datQ==
   dependencies:
-    "@react-navigation/routers" "^7.5.3"
+    "@react-navigation/elements" "^2.9.19"
+    color "^4.2.3"
+    sf-symbols-typescript "^2.1.0"
+
+"@react-navigation/core@^7.17.5":
+  version "7.17.5"
+  resolved "https://registry.npmjs.org/@react-navigation/core/-/core-7.17.5.tgz"
+  integrity sha512-6fDCwDTWC7DJn0SDb9DJGRlipaygHIc+2elpZBJI6Crl/2Pu+Z1d6W4jMJ2gZO6iHKf+Pe5sUiQ/uwepGprZtg==
+  dependencies:
+    "@react-navigation/routers" "^7.5.5"
     escape-string-regexp "^4.0.0"
     fast-deep-equal "^3.1.3"
     nanoid "^3.3.11"
@@ -1965,30 +1974,40 @@
     use-latest-callback "^0.2.4"
     use-sync-external-store "^1.5.0"
 
-"@react-navigation/elements@^2.9.5":
-  version "2.9.5"
-  resolved "https://registry.npmjs.org/@react-navigation/elements/-/elements-2.9.5.tgz"
-  integrity sha512-iHZU8rRN1014Upz73AqNVXDvSMZDh5/ktQ1CMe21rdgnOY79RWtHHBp9qOS3VtqlUVYGkuX5GEw5mDt4tKdl0g==
+"@react-navigation/drawer@^7.10.3":
+  version "7.10.3"
+  resolved "https://registry.npmjs.org/@react-navigation/drawer/-/drawer-7.10.3.tgz"
+  integrity sha512-Gt60Cc8taRBAR+kzPNY/c42xQ67skS4nek/LcegKVhbiHqptABzx75+gp5NIsLCS0WqnH/LZasPWXawixMubjg==
+  dependencies:
+    "@react-navigation/elements" "^2.9.19"
+    color "^4.2.3"
+    react-native-drawer-layout "^4.2.4"
+    use-latest-callback "^0.2.4"
+
+"@react-navigation/elements@^2.9.19", "@react-navigation/elements@^2.9.5":
+  version "2.9.19"
+  resolved "https://registry.npmjs.org/@react-navigation/elements/-/elements-2.9.19.tgz"
+  integrity sha512-gBUvCZuUkOGw1KpLQEZIkByUz8RYPwXeoA6mZFJy9K1mxd8GdqHDMFCIoB0lfPz9rgrHj99RvtdlGZ/ZzkZv2A==
   dependencies:
     color "^4.2.3"
     use-latest-callback "^0.2.4"
     use-sync-external-store "^1.5.0"
 
-"@react-navigation/native@^7.1.16", "@react-navigation/native@^7.1.28":
-  version "7.1.28"
-  resolved "https://registry.npmjs.org/@react-navigation/native/-/native-7.1.28.tgz"
-  integrity sha512-d1QDn+KNHfHGt3UIwOZvupvdsDdiHYZBEj7+wL2yDVo3tMezamYy60H9s3EnNVE1Ae1ty0trc7F2OKqo/RmsdQ==
+"@react-navigation/native@^7.1.16", "@react-navigation/native@^7.1.28", "@react-navigation/native@^7.2.5":
+  version "7.2.5"
+  resolved "https://registry.npmjs.org/@react-navigation/native/-/native-7.2.5.tgz"
+  integrity sha512-01AAUQiiHQAfTabq+ZyU1/ZWq+AbB/J3v0CB0UTJSON6M6cuadWNsbChzrZUdqQvHrXvg96U5i2PQLJzK3+zpg==
   dependencies:
-    "@react-navigation/core" "^7.14.0"
+    "@react-navigation/core" "^7.17.5"
     escape-string-regexp "^4.0.0"
     fast-deep-equal "^3.1.3"
     nanoid "^3.3.11"
     use-latest-callback "^0.2.4"
 
-"@react-navigation/routers@^7.5.3":
-  version "7.5.3"
-  resolved "https://registry.npmjs.org/@react-navigation/routers/-/routers-7.5.3.tgz"
-  integrity sha512-1tJHg4KKRJuQ1/EvJxatrMef3NZXEPzwUIUZ3n1yJ2t7Q97siwRtbynRpQG9/69ebbtiZ8W3ScOZF/OmhvM4Rg==
+"@react-navigation/routers@^7.5.5":
+  version "7.5.5"
+  resolved "https://registry.npmjs.org/@react-navigation/routers/-/routers-7.5.5.tgz"
+  integrity sha512-9/hhMte12Kgu+pMnLfA4EWJ0OQmIEAMVMX06FPH2yGkEQSQ3JhhCN/GkcRikzQhtEi97VYYQA15umptBUShcOQ==
   dependencies:
     nanoid "^3.3.11"
 
@@ -2273,6 +2292,21 @@
   integrity sha512-BH7YwL6rA93ReqeQS1c4bsPpcfOmJasG+Fkr6Y59q83f9M1WcBRHR2vM+P9eOisYRcN3ujQoiZY8uk5W+1WL8w==
   dependencies:
     undici-types "~6.21.0"
+
+"@types/react-native-vector-icons@^6.4.18":
+  version "6.4.18"
+  resolved "https://registry.npmjs.org/@types/react-native-vector-icons/-/react-native-vector-icons-6.4.18.tgz"
+  integrity sha512-YGlNWb+k5laTBHd7+uZowB9DpIK3SXUneZqAiKQaj1jnJCZM0x71GDim5JCTMi4IFkhc9m8H/Gm28T5BjyivUw==
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "^0.70"
+
+"@types/react-native@^0.70":
+  version "0.70.19"
+  resolved "https://registry.npmjs.org/@types/react-native/-/react-native-0.70.19.tgz"
+  integrity sha512-c6WbyCgWTBgKKMESj/8b4w+zWcZSsCforson7UdXtXMecG3MxCinYi6ihhrHVPyUrVzORsvEzK8zg32z4pK6Sg==
+  dependencies:
+    "@types/react" "*"
 
 "@types/react-test-renderer@^19.1.0":
   version "19.1.0"
@@ -6200,9 +6234,9 @@ ms@2.0.0:
   integrity sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==
 
 nanoid@^3.3.11:
-  version "3.3.11"
-  resolved "https://registry.npmjs.org/nanoid/-/nanoid-3.3.11.tgz"
-  integrity sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==
+  version "3.3.12"
+  resolved "https://registry.npmjs.org/nanoid/-/nanoid-3.3.12.tgz"
+  integrity sha512-ZB9RH/39qpq5Vu6Y+NmUaFhQR6pp+M2Xt76XBnEwDaGcVAqhlvxrl3B2bKS5D3NH3QR76v3aSrKaF/Kiy7lEtQ==
 
 napi-postinstall@^0.3.0:
   version "0.3.4"
@@ -6790,6 +6824,14 @@ react-is@^19.1.0, react-is@^19.2.3:
   resolved "https://registry.npmjs.org/react-is/-/react-is-19.2.4.tgz"
   integrity sha512-W+EWGn2v0ApPKgKKCy/7s7WHXkboGcsrXE+2joLyVxkbyVQfO3MUEaUQDHoSmb8TFFrSKYa9mw64WZHNHSDzYA==
 
+react-native-drawer-layout@^4.2.4:
+  version "4.2.4"
+  resolved "https://registry.npmjs.org/react-native-drawer-layout/-/react-native-drawer-layout-4.2.4.tgz"
+  integrity sha512-l1Le5HcVidobnJm8xqFZo46Rs8FDHdxbTZhkjxpNSRgU+QMoQXilOfzTHAeNjEGiKVGgIs9cW3ctXeHqgp5jJg==
+  dependencies:
+    color "^4.2.3"
+    use-latest-callback "^0.2.4"
+
 react-native-gesture-handler@^2.27.2, "react-native-gesture-handler@>= 2.0.0":
   version "2.30.0"
   resolved "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-2.30.0.tgz"
@@ -6814,7 +6856,7 @@ react-native-nitro-modules@*, react-native-nitro-modules@^0.33.9:
   resolved "https://registry.npmjs.org/react-native-nitro-modules/-/react-native-nitro-modules-0.33.9.tgz"
   integrity sha512-BM9C5mCGYYjrc8CDWZZ0anLWU/knH2xaEuFzvzogKTOW6fzgS6mmsCdM3ty+AhImJNSYwK19DLrHaqwnrrwEzw==
 
-react-native-reanimated@^4.0.1:
+react-native-reanimated@^4.0.1, "react-native-reanimated@>= 2.0.0":
   version "4.2.2"
   resolved "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-4.2.2.tgz"
   integrity sha512-o3kKvdD8cVlg12Z4u3jv0MFAt53QV4k7gD9OLwQqU8eZLyd8QvaOjVZIghMZhC2pjP93uUU44PlO5JgF8S4Vxw==
@@ -7309,6 +7351,11 @@ setprototypeof@~1.2.0:
   version "1.2.0"
   resolved "https://registry.npmjs.org/setprototypeof/-/setprototypeof-1.2.0.tgz"
   integrity sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==
+
+sf-symbols-typescript@^2.1.0:
+  version "2.2.0"
+  resolved "https://registry.npmjs.org/sf-symbols-typescript/-/sf-symbols-typescript-2.2.0.tgz"
+  integrity sha512-TPbeg0b7ylrswdGCji8FRGFAKuqbpQlLbL8SOle3j1iHSs5Ob5mhvMAxWN2UItOjgALAB5Zp3fmMfj8mbWvXKw==
 
 shebang-command@^2.0.0:
   version "2.0.0"
