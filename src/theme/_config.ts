@@ -7,22 +7,22 @@ export const enum Variant {
 }
 
 const colorsLight = {
-  gray100: '#DFDFDF',
-  gray200: '#A1A1A1',
-  gray400: '#4D4D4D',
-  gray50: '#EFEFEF',
-  gray800: '#303030',
-  purple100: '#E1E1EF',
-  purple50: '#1B1A23',
-  purple500: '#44427D',
-  red500: '#C13333',
-  skeleton: '#A1A1A1',
+  gray100: '#E8E8E8',
+  gray200: '#B8B8B8',
+  gray400: '#6B6B6B',
+  gray50: '#F8F9FC',
+  gray800: '#2A2A2A',
+  purple100: '#E8E7F5',
+  purple50: '#F3F2FB',
+  purple500: '#5B4DC7',
+  red500: '#E74C3C',
+  skeleton: '#D1D1D6',
 
-  midnight: '#EFEFEF', // background
-  frost: '#091127', // primary text, primary icon
-  sky: '#091127', // secondary text
-  mutedBlue: '#8996B8', // secondary icon
-  cardPlaceholder: '#E7ECF8',
+  midnight: '#FFFFFF', // background - clean white
+  frost: '#1A1A2E', // primary text, primary icon - deep dark
+  sky: '#5E6272', // secondary text - muted gray
+  mutedBlue: '#9BA3C4', // secondary icon - soft blue-gray
+  cardPlaceholder: '#F5F6FA', // card background - subtle off-white
 } as const;
 
 const colorsDark = {
@@ -61,8 +61,8 @@ export const config = {
   gutters: sizes,
   navigationColors: {
     ...DefaultTheme.colors,
-    background: colorsLight.gray50,
-    card: colorsLight.gray50,
+    background: colorsLight.midnight,
+    card: colorsLight.midnight,
   },
   variants: {
     dark: {
