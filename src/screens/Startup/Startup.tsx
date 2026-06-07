@@ -41,11 +41,6 @@ function Startup({ navigation }: RootScreenProps<Paths.Startup>) {
           layout.justifyCenter,
         ]}
       >
-        <AssetByVariant
-          path="tom"
-          resizeMode="contain"
-          style={{ height: 300, width: 300 }}
-        />
         {isFetching ? (
           <ActivityIndicator size="large" style={[gutters.marginVertical_24]} />
         ) : undefined}

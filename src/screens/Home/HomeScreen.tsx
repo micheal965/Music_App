@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import React, { useEffect, useMemo } from 'react';
 import { useTheme } from '@/theme';
 import AppHeader from '@/components/molecules/Header/AppHeader';
@@ -31,7 +31,7 @@ const HomeScreen = () => {
 
   const handleSongPress = (song: SongType, categoryId: number) => {
     // Find the category to get the full song list
-    const category = songsWithCategory.find(cat => cat.id === categoryId);
+    const category = songsWithCategory.find((cat) => cat.id === categoryId);
     if (category) {
       // Play the selected song with its category as the queue
       playSong(song, category.songs);

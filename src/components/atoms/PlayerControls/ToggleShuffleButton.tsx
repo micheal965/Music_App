@@ -1,18 +1,20 @@
 import { TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import React from 'react';
 import { iconSizes } from '@/theme/Constants/iconSizes';
 import { useTheme } from '@/theme';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import { useAudioPlayer } from '@/contexts/AudioContext';
 
 const ToggleShuffleButton = () => {
   const { colors } = useTheme();
-  const isShuffled = true;
+  const { isShuffled, toggleShuffle } = useAudioPlayer();
+
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={toggleShuffle}>
       <MaterialIcon
-        name={isShuffled ? 'shuffle' : 'unshuffle'}
-        color={colors.sky}
+        name={isShuffled ? 'shuffle' : 'shuffle'}
+        color={isShuffled ? colors.frost : colors.sky}
         size={iconSizes.md}
       />
     </TouchableOpacity>

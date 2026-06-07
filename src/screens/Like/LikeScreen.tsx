@@ -16,14 +16,15 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import { useNavigation } from '@react-navigation/native';
 import { Nav } from '@/Constants/AppTypes';
-import { songsWithCategory } from '@/data/songsWithCategory';
 import RowedSongCardWithCategory from '@/components/molecules/RowedSongCardWithCategory/RowedSongCardWithCategory';
 import { useAudioPlayer } from '@/contexts/AudioContext';
+import { useLikedSongs } from '@/contexts/LikedSongsContext';
 import { SongType } from '@/Constants/SongType';
 
 const LikeScreen = () => {
   const navigation = useNavigation<Nav>();
   const { playSong } = useAudioPlayer();
+  const { likedSongs } = useLikedSongs();
 
   const { colors, gutters, layout } = useTheme();
   const styles = useMemo(
@@ -33,7 +34,7 @@ const LikeScreen = () => {
 
   const handleSongPress = (song: SongType) => {
     // Play the selected song with liked songs as the queue
-    playSong(song, songsWithCategory[1].songs);
+    playSong(song, likedSongs);
   };
 
   return (
@@ -55,13 +56,23 @@ const LikeScreen = () => {
           />
         </TouchableOpacity>
       </View>
-      <RowedSongCardWithCategory
-        title={songsWithCategory[1].title}
-        songs={songsWithCategory[1].songs}
-        horizontal
-        numOfColumns={1}
-        onSongPress={handleSongPress}
-      />
+      {likedSongs.length > 0 ? (
+        <RowedSongCardWithCategory
+          title="Liked Songs"
+          songs={likedSongs}
+          horizontal
+          numOfColumns={1}
+          onSongPress={handleSongPress}
+        />
+      ) : (
+        <View style={styles.emptyContainer}>
+          <AntDesign name="hearto" size={64} color={colors.sky} />
+          <Text style={styles.emptyText}>No liked songs yet</Text>
+          <Text style={styles.emptySubText}>
+            Songs you like will appear here
+          </Text>
+        </View>
+      )}
     </SafeScreen>
   );
 };
@@ -84,6 +95,22 @@ const createStyles = (colors: any, gutters: Gutters, layout: any) =>
       color: colors.frost,
       fontFamily: fontFamilies.bold,
       ...gutters.paddingVertical_12,
+    },
+    emptyContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: 16,
+    },
+    emptyText: {
+      fontSize: fontSizes.xl,
+      color: colors.frost,
+      fontFamily: fontFamilies.bold,
+    },
+    emptySubText: {
+      fontSize: fontSizes.md,
+      color: colors.sky,
+      fontFamily: fontFamilies.regular,
     },
   });
 

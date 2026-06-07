@@ -12,6 +12,8 @@ import { SongType } from '@/Constants/SongType';
 // Enable playback in silence mode (iOS)
 Sound.setCategory('Playback');
 
+export type RepeatMode = 'off' | 'all' | 'one';
+
 interface AudioContextType {
   currentTrack: SongType | null;
   currentIndex: number;
@@ -19,13 +21,19 @@ interface AudioContextType {
   position: number;
   duration: number;
   isPlayerReady: boolean;
+  isMuted: boolean;
+  repeatMode: RepeatMode;
+  isShuffled: boolean;
   play: () => void;
   pause: () => void;
   skipToNext: () => void;
   skipToPrevious: () => void;
   loadQueue: (songs: SongType[]) => void;
-  seekTo: (position: number) => void;
   playSong: (song: SongType, queue: SongType[]) => void;
+  toggleMute: () => void;
+  toggleRepeat: () => void;
+  toggleShuffle: () => void;
+  seekTo: (seconds: number) => void;
 }
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
@@ -36,9 +44,13 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isMuted, setIsMuted] = useState(false);
+  const [repeatMode, setRepeatMode] = useState<RepeatMode>('off');
+  const [isShuffled, setIsShuffled] = useState(false);
 
   const [queue, setQueue] = useState<SongType[]>([]);
-  
+  const originalQueueRef = useRef<SongType[]>([]);
+
   const loadIdRef = useRef(0);
   const soundRef = useRef<Sound | null>(null);
   const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -104,7 +116,7 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
 
         sound.play(() => {
           setIsPlaying(false);
-          skipToNext();
+          handleTrackEnd();
         });
       }
     });
@@ -115,12 +127,34 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
         if (success) {
           console.log('Finished playing');
           setIsPlaying(false);
-          skipToNext();
+          handleTrackEnd();
         }
       });
       setIsPlaying(true);
     } else if (queue.length > 0) {
       loadSound(queue[currentIndex], true);
+    }
+  };
+
+  const handleTrackEnd = () => {
+    if (repeatMode === 'one') {
+      // Replay the same track
+      if (soundRef.current) {
+        soundRef.current.setCurrentTime(0);
+        soundRef.current.play(() => {
+          setIsPlaying(false);
+          handleTrackEnd();
+        });
+        setIsPlaying(true);
+      }
+    } else if (repeatMode === 'all') {
+      // Go to next track (will loop back to first after last)
+      skipToNext();
+    } else {
+      // Repeat off: only skip if not the last track
+      if (currentIndex < queue.length - 1) {
+        skipToNext();
+      }
     }
   };
 
@@ -147,16 +181,11 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
     loadSound(queue[prevIndex], isPlaying);
   };
 
-  const seekTo = (seconds: number) => {
-    if (soundRef.current) {
-      soundRef.current.setCurrentTime(seconds);
-      setPosition(seconds);
-    }
-  };
-
   const loadQueue = (songs: SongType[]) => {
     setQueue(songs);
+    originalQueueRef.current = songs;
     setCurrentIndex(0);
+    setIsShuffled(false);
     if (songs.length > 0) {
       loadSound(songs[0], false);
     }
@@ -164,10 +193,73 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
 
   const playSong = (song: SongType, newQueue: SongType[]) => {
     setQueue(newQueue);
+    originalQueueRef.current = newQueue;
+    setIsShuffled(false);
     const index = newQueue.findIndex((s) => s.url === song.url);
     if (index >= 0) {
       setCurrentIndex(index);
       loadSound(song, true);
+    }
+  };
+
+  const toggleMute = () => {
+    if (soundRef.current) {
+      const newMutedState = !isMuted;
+      soundRef.current.setVolume(newMutedState ? 0 : 1);
+      setIsMuted(newMutedState);
+    }
+  };
+
+  const toggleRepeat = () => {
+    setRepeatMode((current) => {
+      if (current === 'off') return 'all';
+      if (current === 'all') return 'one';
+      return 'off';
+    });
+  };
+
+  const shuffleArray = <T,>(array: T[]): T[] => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
+
+  const toggleShuffle = () => {
+    if (!currentTrack || queue.length === 0) {
+      setIsShuffled(!isShuffled);
+      return;
+    }
+
+    if (isShuffled) {
+      // Turn off shuffle - restore original order
+      const originalIndex = originalQueueRef.current.findIndex(
+        (song) => song.url === currentTrack.url
+      );
+      setQueue(originalQueueRef.current);
+      setCurrentIndex(originalIndex >= 0 ? originalIndex : 0);
+      setIsShuffled(false);
+    } else {
+      // Turn on shuffle
+      originalQueueRef.current = [...queue];
+      
+      // Create shuffled queue with current track at the beginning
+      const otherSongs = queue.filter((song) => song.url !== currentTrack.url);
+      const shuffledOthers = shuffleArray(otherSongs);
+      const newQueue = [currentTrack, ...shuffledOthers];
+      
+      setQueue(newQueue);
+      setCurrentIndex(0);
+      setIsShuffled(true);
+    }
+  };
+
+  const seekTo = (seconds: number) => {
+    if (soundRef.current) {
+      soundRef.current.setCurrentTime(seconds);
+      setPosition(seconds);
     }
   };
 
@@ -180,13 +272,19 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
         position,
         duration,
         isPlayerReady: true,
+        isMuted,
+        repeatMode,
+        isShuffled,
         play,
         pause,
         skipToNext,
         skipToPrevious,
         loadQueue,
-        seekTo,
         playSong,
+        toggleMute,
+        toggleRepeat,
+        toggleShuffle,
+        seekTo,
       }}
     >
       {children}

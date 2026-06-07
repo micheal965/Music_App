@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
@@ -19,6 +19,7 @@ import PreviousButton from '@/components/atoms/PlayerControls/PreviousButton';
 import PlayButton from '@/components/atoms/PlayerControls/PlayPauseButton';
 import NextButton from '@/components/atoms/PlayerControls/NextButton';
 import { useAudioPlayer } from '@/contexts/AudioContext';
+import { useLikedSongs } from '@/contexts/LikedSongsContext';
 import { formatTime } from '@/utils/formatTime';
 
 const placeHolderImage =
@@ -28,12 +29,19 @@ const PlayerScreen = () => {
   const navigation = useNavigation<Nav>();
   const { colors, gutters } = useTheme();
   const { currentTrack, position, duration } = useAudioPlayer();
+  const { isLiked, toggleLike } = useLikedSongs();
   const styles = useMemo(
     () => createStyles(colors, gutters),
     [colors, gutters],
   );
 
-  const isLiked = useState(false);
+  const handleToggleLike = () => {
+    if (currentTrack) {
+      toggleLike(currentTrack);
+    }
+  };
+
+  const trackIsLiked = currentTrack ? isLiked(currentTrack.url) : false;
 
   return (
     <SafeScreen style={styles.container}>
@@ -54,7 +62,7 @@ const PlayerScreen = () => {
       </View>
 
       {/* Content */}
-      <View style={styles.contentContainer}>
+      <View>
         <View style={styles.coverImageContainer}>
           <Image
             source={{ uri: currentTrack?.artwork || placeHolderImage }}
@@ -71,11 +79,11 @@ const PlayerScreen = () => {
               {currentTrack?.artist?.toUpperCase() || 'UNKNOWN ARTIST'}
             </Text>
           </View>
-          <TouchableOpacity style={styles.rightIcon}>
+          <TouchableOpacity style={styles.rightIcon} onPress={handleToggleLike}>
             <AntDesign
-              name={isLiked ? 'hearto' : 'heart'}
+              name={trackIsLiked ? 'heart' : 'hearto'}
               size={iconSizes.md}
-              color={colors.frost}
+              color={trackIsLiked ? colors.purple500 : colors.frost}
             />
           </TouchableOpacity>
         </View>
@@ -133,9 +141,6 @@ const createStyles = (colors: any, gutters: Gutters) =>
     },
 
     // Content
-    contentContainer: {
-      ...gutters.gap_4,
-    },
     coverImageContainer: {
       alignItems: 'center',
     },

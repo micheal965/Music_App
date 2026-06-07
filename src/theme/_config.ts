@@ -18,10 +18,10 @@ const colorsLight = {
   red500: '#C13333',
   skeleton: '#A1A1A1',
 
-  midnight: '#F8FAFF', // background
-  frost: '#091227', // primary text, primary icon
-  sky: '#5B6785', // secondary text
-  mutedBlue: '#7A86A6', // secondary icon
+  midnight: '#EFEFEF', // background
+  frost: '#091127', // primary text, primary icon
+  sky: '#091127', // secondary text
+  mutedBlue: '#8996B8', // secondary icon
   cardPlaceholder: '#E7ECF8',
 } as const;
 

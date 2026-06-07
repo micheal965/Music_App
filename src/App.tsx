@@ -8,6 +8,7 @@ import ApplicationNavigator from '@/navigation/Application';
 import { ThemeProvider } from '@/theme';
 import '@/translations';
 import { AudioProvider } from '@/contexts/AudioContext';
+import { LikedSongsProvider } from '@/contexts/LikedSongsContext';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,9 +28,11 @@ function App() {
     <GestureHandlerRootView>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider storage={storage}>
-          <AudioProvider>
-            <ApplicationNavigator />
-          </AudioProvider>
+          <LikedSongsProvider>
+            <AudioProvider>
+              <ApplicationNavigator />
+            </AudioProvider>
+          </LikedSongsProvider>
         </ThemeProvider>
       </QueryClientProvider>
     </GestureHandlerRootView>

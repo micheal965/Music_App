@@ -1,35 +1,59 @@
 import { StyleSheet, View } from 'react-native';
 import { useAudioPlayer } from '@/contexts/AudioContext';
+import Slider from '@react-native-community/slider';
+import { useTheme } from '@/theme';
+import { useState } from 'react';
 
 const ProgressBar = () => {
-  const { position, duration } = useAudioPlayer();
-  const progress = duration > 0 ? position / duration : 0;
+  const { position, duration, seekTo, isPlaying } = useAudioPlayer();
+  const { colors } = useTheme();
+  const [isSeeking, setIsSeeking] = useState(false);
+  const [seekPosition, setSeekPosition] = useState(0);
+
+  const displayPosition = isSeeking ? seekPosition : position;
+  const progress = duration > 0 ? displayPosition / duration : 0;
+
+  const handleSlidingStart = () => {
+    setIsSeeking(true);
+    setSeekPosition(position);
+  };
+
+  const handleValueChange = (value: number) => {
+    setSeekPosition(value * duration);
+  };
+
+  const handleSlidingComplete = (value: number) => {
+    const newPosition = value * duration;
+    seekTo(newPosition);
+    setIsSeeking(false);
+  };
 
   return (
-    <View style={styles.line}>
-      <View
-        style={[
-          styles.progress,
-          {
-            width: `${progress * 100}%`,
-          },
-        ]}
+    <View style={styles.container}>
+      <Slider
+        style={styles.slider}
+        value={progress}
+        minimumValue={0}
+        maximumValue={1}
+        minimumTrackTintColor={colors.purple500}
+        maximumTrackTintColor={colors.gray400}
+        thumbTintColor={colors.frost}
+        onSlidingStart={handleSlidingStart}
+        onValueChange={handleValueChange}
+        onSlidingComplete={handleSlidingComplete}
       />
     </View>
   );
 };
+
 export default ProgressBar;
 
 const styles = StyleSheet.create({
-  line: {
-    height: 4,
+  container: {
     width: '100%',
-    backgroundColor: '#969696',
-    borderRadius: 3,
-    overflow: 'hidden',
   },
-  progress: {
-    height: '100%',
-    backgroundColor: '#5b03ff',
+  slider: {
+    width: '100%',
+    height: 30,
   },
 });

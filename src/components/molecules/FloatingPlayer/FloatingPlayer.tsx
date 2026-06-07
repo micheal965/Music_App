@@ -96,6 +96,6 @@ const createStyles = (colors: any, gutters: Gutters) =>
     controlsContainer: {
       flexDirection: 'row',
       ...gutters.gap_12,
-      ...gutters.paddingRight_16,
+      ...gutters.paddingHorizontal_16,
     },
   });
