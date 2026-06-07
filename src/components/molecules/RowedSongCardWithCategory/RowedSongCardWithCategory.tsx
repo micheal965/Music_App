@@ -1,12 +1,19 @@
-import { Dimensions, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Dimensions,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, { useMemo } from 'react';
-import SongCard from '@/components/molecules/SongCard/SongCard';
 import { fontFamilies, fontSizes } from '@/theme/Constants/fonts';
 import { Gutters } from '@/theme/types/gutters';
 import { useTheme } from '@/theme';
+import RowedSongCard from '../RowedSongCard/RowedSongCard';
 import { SongType } from '@/Constants/SongType';
 
-type SongCardWithCategoryProps = {
+type RowedSongCardWithCategoryProps = {
   title: string;
   songs: SongType[];
   horizontal?: boolean;
@@ -15,14 +22,13 @@ type SongCardWithCategoryProps = {
   onSongPress?: (song: SongType) => void;
 };
 
-const SongCardWithCategory = ({
+const RowedSongCardWithCategory = ({
   title,
   songs,
-  horizontal = true,
   numOfColumns,
   onSeeAll,
   onSongPress,
-}: SongCardWithCategoryProps) => {
+}: RowedSongCardWithCategoryProps) => {
   const { colors, gutters, layout } = useTheme();
   const styles = useMemo(
     () => createStyles(colors, gutters),
@@ -36,8 +42,16 @@ const SongCardWithCategory = ({
   }
 
   return (
-    <View style={gutters.marginBottom_12}>
-      <View style={[layout.row, layout.justifyBetween, layout.itemsCenter, gutters.paddingHorizontal_2]}>
+    <View style={gutters.marginBottom_24}>
+      <View
+        style={[
+          layout.row,
+          layout.justifyBetween,
+          layout.itemsCenter,
+          gutters.paddingHorizontal_2,
+          gutters.paddingBottom_12,
+        ]}
+      >
         <Text style={styles.headingText}>{title}</Text>
         {onSeeAll && (
           <TouchableOpacity onPress={onSeeAll}>
@@ -48,22 +62,13 @@ const SongCardWithCategory = ({
 
       <FlatList
         data={songs}
-        horizontal={horizontal}
-        numColumns={horizontal ? 1 : numOfColumns}
-        columnWrapperStyle={
-          !horizontal && numOfColumns && numOfColumns > 1 ? { justifyContent: 'space-between' } : undefined
-        }
+        numColumns={numOfColumns}
         renderItem={({ item }) => (
-          <SongCard 
-            song={item} 
-            width={!horizontal ? cardWidth : undefined} 
-            onPress={() => onSongPress?.(item)}
-          />
+          <RowedSongCard song={item} onPress={() => onSongPress?.(item)} />
         )}
         keyExtractor={(item, index) => `${item.title}-${index}`}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={horizontal ? gutters.paddingRight_12 : undefined}
       />
     </View>
   );
@@ -75,7 +80,6 @@ const createStyles = (colors: any, gutters: Gutters) =>
       fontSize: fontSizes.xl,
       color: colors.frost,
       fontFamily: fontFamilies.bold,
-      ...gutters.paddingVertical_16,
     },
     seeAllText: {
       color: colors.sky,
@@ -84,4 +88,4 @@ const createStyles = (colors: any, gutters: Gutters) =>
     },
   });
 
-export default SongCardWithCategory;
+export default RowedSongCardWithCategory;

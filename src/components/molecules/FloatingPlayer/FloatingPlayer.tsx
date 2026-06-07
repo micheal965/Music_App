@@ -10,8 +10,9 @@ import ProgressBar from '@/components/atoms/PlayerControls/ProgressBar';
 import MovingText from '@/components/atoms/MovingText/MovingText';
 import { Paths } from '@/navigation/paths';
 import { useNavigation } from '@react-navigation/core';
-import { Nav } from '@/Constants/types';
+import { Nav } from '@/Constants/AppTypes';
 import { iconSizes } from '@/theme/Constants/iconSizes';
+import { useAudioPlayer } from '@/contexts/AudioContext';
 
 const imageUrl =
   'https://ncsmusic.s3.eu-west-1.amazonaws.com/tracks/000/002/085/325x325/devaste-1776124867-AtI72sytQ6.png';
@@ -19,6 +20,7 @@ const imageUrl =
 const FloatingPlayer = () => {
   const navigation = useNavigation<Nav>();
   const { colors, gutters } = useTheme();
+  const { currentTrack } = useAudioPlayer();
 
   const styles = useMemo(
     () => createStyles(colors, gutters),
@@ -30,17 +32,22 @@ const FloatingPlayer = () => {
       activeOpacity={0.5}
       onPress={() => navigation.navigate(Paths.Player)}
     >
-      <ProgressBar progress={0.3} />
+      <ProgressBar />
       <View style={styles.container}>
         <View style={styles.contentContainer}>
-          <Image source={{ uri: imageUrl }} style={styles.coverImage} />
+          <Image
+            source={{ uri: currentTrack?.artwork || imageUrl }}
+            style={styles.coverImage}
+          />
           <View style={styles.titleContainer}>
             <MovingText
-              text={'Monster Go Home'}
-              animationThreshold={15}
+              text={currentTrack?.title || 'No track playing'}
+              animationThreshold={5}
               style={styles.title}
             />
-            <Text style={styles.artist}>Alan Walker</Text>
+            <Text style={styles.artist}>
+              {currentTrack?.artist || 'Unknown Artist'}
+            </Text>
           </View>
         </View>
 

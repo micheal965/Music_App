@@ -9,7 +9,7 @@ import { Gutters } from '@/theme/types/gutters';
 import { fontFamilies, fontSizes } from '@/theme/Constants/fonts';
 import { SafeScreen } from '@/components/templates';
 import { useNavigation } from '@react-navigation/native';
-import { Nav } from '@/Constants/types';
+import { Nav } from '@/Constants/AppTypes';
 
 import ToggleMuteButton from '@/components/atoms/PlayerControls/ToggleMuteButton';
 import ToggleRepeatButton from '@/components/atoms/PlayerControls/ToggleRepeatButton';
@@ -18,13 +18,16 @@ import ProgressBar from '@/components/atoms/PlayerControls/ProgressBar';
 import PreviousButton from '@/components/atoms/PlayerControls/PreviousButton';
 import PlayButton from '@/components/atoms/PlayerControls/PlayPauseButton';
 import NextButton from '@/components/atoms/PlayerControls/NextButton';
+import { useAudioPlayer } from '@/contexts/AudioContext';
+import { formatTime } from '@/utils/formatTime';
 
-const imageUrl =
+const placeHolderImage =
   'https://ncsmusic.s3.eu-west-1.amazonaws.com/tracks/000/002/061/325x325/com-bota-1771513264-f9unBALkU6.jpg';
 
 const PlayerScreen = () => {
   const navigation = useNavigation<Nav>();
   const { colors, gutters } = useTheme();
+  const { currentTrack, position, duration } = useAudioPlayer();
   const styles = useMemo(
     () => createStyles(colors, gutters),
     [colors, gutters],
@@ -53,13 +56,20 @@ const PlayerScreen = () => {
       {/* Content */}
       <View style={styles.contentContainer}>
         <View style={styles.coverImageContainer}>
-          <Image source={{ uri: imageUrl }} style={styles.coverImage} />
+          <Image
+            source={{ uri: currentTrack?.artwork || placeHolderImage }}
+            style={styles.coverImage}
+          />
         </View>
 
         <View style={styles.contentHeartRowContainer}>
           <View>
-            <Text style={styles.title}>Believer</Text>
-            <Text style={styles.artist}>IMAGINE DRAGONS</Text>
+            <Text style={styles.title}>
+              {currentTrack?.title || 'No track playing'}
+            </Text>
+            <Text style={styles.artist}>
+              {currentTrack?.artist?.toUpperCase() || 'UNKNOWN ARTIST'}
+            </Text>
           </View>
           <TouchableOpacity style={styles.rightIcon}>
             <AntDesign
@@ -80,10 +90,10 @@ const PlayerScreen = () => {
 
         <View style={styles.sliderContainer}>
           <View style={styles.timeRow}>
-            <Text style={styles.timeText}>00:50</Text>
-            <Text style={styles.timeText}>04:00</Text>
+            <Text style={styles.timeText}>{formatTime(position)}</Text>
+            <Text style={styles.timeText}>{formatTime(duration)}</Text>
           </View>
-          <ProgressBar progress={0.4} />
+          <ProgressBar />
         </View>
         <View style={styles.playerControlsContainer}>
           <PreviousButton size={iconSizes.xxl} />
@@ -100,7 +110,7 @@ const createStyles = (colors: any, gutters: Gutters) =>
     container: {
       flex: 1,
       backgroundColor: colors.midnight,
-      ...gutters.paddingHorizontal_16,
+      ...gutters.padding_16,
     },
 
     // Header
@@ -125,7 +135,6 @@ const createStyles = (colors: any, gutters: Gutters) =>
     // Content
     contentContainer: {
       ...gutters.gap_4,
-      ...gutters.paddingTop_32,
     },
     coverImageContainer: {
       alignItems: 'center',
@@ -172,7 +181,7 @@ const createStyles = (colors: any, gutters: Gutters) =>
       gap: 12,
     },
     sliderContainer: {
-      marginVertical: 34,
+      marginTop: 20,
       gap: 8,
     },
     timeRow: {

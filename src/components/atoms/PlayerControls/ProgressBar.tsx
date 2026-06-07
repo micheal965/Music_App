@@ -1,6 +1,10 @@
 import { StyleSheet, View } from 'react-native';
+import { useAudioPlayer } from '@/contexts/AudioContext';
 
-const ProgressBar = ({ progress = 0.3 }: { progress: number }) => {
+const ProgressBar = () => {
+  const { position, duration } = useAudioPlayer();
+  const progress = duration > 0 ? position / duration : 0;
+
   return (
     <View style={styles.line}>
       <View

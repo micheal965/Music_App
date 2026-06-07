@@ -12,7 +12,6 @@ type TabParamList = {
   [Paths.Like]: undefined;
   [Paths.Player]: undefined;
   [Paths.Settings]: undefined;
-  [Paths.Example]: undefined;
 };
 
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -23,14 +22,17 @@ const BottomTabNavigation = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.frost,
-        tabBarInactiveTintColor: colors.sky,
+
+        tabBarInactiveTintColor: colors.frost,
+        tabBarActiveTintColor: colors.sky,
+
         tabBarStyle: {
           backgroundColor: colors.midnight,
           borderTopWidth: 1,
           height: 60,
-          paddingBottom: 8,
-          paddingTop: 8,
+        },
+        tabBarItemStyle: {
+          paddingVertical: 4,
         },
         tabBarLabelStyle: {
           fontSize: 12,
@@ -52,7 +54,7 @@ const BottomTabNavigation = () => {
         name={Paths.Like}
         component={LikeScreen}
         options={{
-          tabBarLabel: 'Likes',
+          tabBarLabel: 'Liked Songs',
           tabBarIcon: ({ color, size }) => (
             <Icon name="heart" size={size} color={color} />
           ),

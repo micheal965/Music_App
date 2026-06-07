@@ -5,6 +5,7 @@ export const enum Paths {
   Like = 'Like',
   Player = 'Player',
   Settings = 'Settings',
+  Profile = 'Profile',
 
   MainTabs = 'BottomTabNavigation',
   MainDrawer = 'MainDrawer',

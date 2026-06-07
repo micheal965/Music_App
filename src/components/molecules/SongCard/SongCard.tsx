@@ -4,11 +4,15 @@ import { fontFamilies, fontSizes } from '@/theme/Constants/fonts';
 import { useTheme } from '@/theme';
 import { Gutters } from '@/theme/types/gutters';
 import { Borders } from '@/theme/types/borders';
+import { SongType } from '@/Constants/SongType';
 
-const imageUrl =
-  'https://ncsmusic.s3.eu-west-1.amazonaws.com/tracks/000/002/090/325x325/back2u-1777474859-WXPpBcDkbv.png';
+type SongCardProps = {
+  song: SongType;
+  width?: number;
+  onPress?: () => void;
+};
 
-const SongCard = ({ width }: { width: number | undefined }) => {
+const SongCard = ({ song, width, onPress }: SongCardProps) => {
   const { colors, gutters, borders } = useTheme();
 
   const styles = useMemo(
@@ -18,12 +22,18 @@ const SongCard = ({ width }: { width: number | undefined }) => {
 
   return (
     <TouchableOpacity
-      style={[styles.container, , width ? { width } : undefined]}
+      onPress={onPress}
+      activeOpacity={0.8}
+      style={[styles.container, width ? { width } : undefined]}
     >
       <View style={styles.cardContainer}>
-        <Image source={{ uri: imageUrl }} style={styles.coverImage} />
-        <Text style={styles.title}>Monster Go home</Text>
-        <Text style={styles.author}>Alan walker</Text>
+        <Image source={{ uri: song.artwork }} style={styles.coverImage} />
+        <Text numberOfLines={1} style={styles.title}>
+          {song.title}
+        </Text>
+        <Text numberOfLines={1} style={styles.author}>
+          {song.artist}
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -43,17 +53,22 @@ const createStyles = (colors: any, gutters: Gutters, borders: Borders) =>
       width: '95%',
       height: 160,
       ...borders.rounded_12,
+      backgroundColor: colors.purple100,
     },
     title: {
       color: colors.frost,
       fontFamily: fontFamilies.medium,
       fontSize: fontSizes.md,
       ...gutters.paddingTop_12,
+      width: '90%',
+      textAlign: 'center',
     },
     author: {
       color: colors.sky,
       fontSize: fontSizes.sm,
       fontFamily: fontFamilies.regular,
+      width: '90%',
+      textAlign: 'center',
     },
   });
 

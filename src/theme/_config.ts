@@ -18,10 +18,11 @@ const colorsLight = {
   red500: '#C13333',
   skeleton: '#A1A1A1',
 
-  midnight: '#EAF0FF',
-  frost: '#FFFFFF',
-  sky: '#A5C0FF',
-  mutedBlue: '#6B7AA6',
+  midnight: '#F8FAFF', // background
+  frost: '#091227', // primary text, primary icon
+  sky: '#5B6785', // secondary text
+  mutedBlue: '#7A86A6', // secondary icon
+  cardPlaceholder: '#E7ECF8',
 } as const;
 
 const colorsDark = {
@@ -40,6 +41,7 @@ const colorsDark = {
   frost: '#EAF0FF', //textprimary,iconprimary
   sky: '#A5C0FF', //textsecondary
   mutedBlue: '#8996B8', //iconsecondary
+  cardPlaceholder: '#16213D',
 } as const;
 
 const sizes = [0, 1, 2, 4, 6, 8, 12, 16, 24, 32, 40, 80] as const;

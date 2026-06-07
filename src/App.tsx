@@ -7,6 +7,7 @@ import { createMMKV } from 'react-native-mmkv';
 import ApplicationNavigator from '@/navigation/Application';
 import { ThemeProvider } from '@/theme';
 import '@/translations';
+import { AudioProvider } from '@/contexts/AudioContext';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,7 +27,9 @@ function App() {
     <GestureHandlerRootView>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider storage={storage}>
-          <ApplicationNavigator />
+          <AudioProvider>
+            <ApplicationNavigator />
+          </AudioProvider>
         </ThemeProvider>
       </QueryClientProvider>
     </GestureHandlerRootView>
